@@ -4,8 +4,8 @@
 
 ## 目录说明
 
-- `lists/proxy-domain.list`：自维护的强制代理/旁路域名列表，第一版由 iKuai 当前 `PassWall` 和 `IKUAI_BYPASS_private_bypass` 规则迁移而来。
-- `lists/direct-domain.list`：自维护的强制直连域名列表，第一版由 iKuai 当前 `direct` 和 `IKUAI_BYPASS_private_direct` 规则迁移而来。
+- `lists/proxy-domain.list`：自维护的强制代理/旁路域名列表，第一版只保留 iKuai 当前 `PassWall` 规则，避免混入第三方仓库作者的私有规则。
+- `lists/direct-domain.list`：自维护的强制直连域名列表，第一版只保留 iKuai 当前 `direct` 规则，避免混入第三方仓库作者的私有规则。
 - `sources.yml`：公共上游规则和本仓库自维护列表的来源记录。后续生成脚本应该读取这个文件，而不是反向读取 iKuai 的历史表。
 
 ## 维护原则

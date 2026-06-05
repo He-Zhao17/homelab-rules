@@ -10,7 +10,6 @@ self_maintained:
     raw_url: https://raw.githubusercontent.com/He-Zhao17/homelab-rules/main/lists/proxy-domain.list
     migrated_from:
       - iKuai stream_domain comment=PassWall
-      - iKuai stream_domain comment=IKUAI_BYPASS_private_bypass
 
   # 自维护直连域名列表：用于补充公共规则中需要强制走主线直连的域名。
   direct_domains:
@@ -18,7 +17,6 @@ self_maintained:
     raw_url: https://raw.githubusercontent.com/He-Zhao17/homelab-rules/main/lists/direct-domain.list
     migrated_from:
       - iKuai stream_domain comment=direct
-      - iKuai stream_domain comment=IKUAI_BYPASS_private_direct
 
 public_upstreams:
   # 公共 GFW 域名规则只记录来源，不复制进仓库，避免大表长期静态化。
@@ -48,3 +46,7 @@ migration:
   date: 2026-06-05
   source_router: 192.168.50.2
   exported_via: 192.168.50.232 ikuai-bypass helper
+  # 第三方仓库作者的 private_bypass/private_direct 上游规则不是本网络的事实源，已从本仓库剔除。
+  excluded_private_upstreams:
+    - iKuai stream_domain comment=IKUAI_BYPASS_private_bypass
+    - iKuai stream_domain comment=IKUAI_BYPASS_private_direct
