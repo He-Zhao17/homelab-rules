@@ -80,7 +80,7 @@ migration:
   # 迁移时间使用当前运行环境日期，便于以后定位初始快照来源。
   date: 2026-06-05
   source_router: 192.168.50.2
-  exported_via: 192.168.50.232 ikuai-bypass helper
+  exported_via: 192.168.50.232 micro-dockers host / ikuai-bypass container
   # 第三方仓库作者的 private_bypass/private_direct 上游规则不是本网络的事实源，已从本仓库剔除。
   excluded_private_upstreams:
     - iKuai stream_domain comment=IKUAI_BYPASS_private_bypass
