@@ -19,14 +19,49 @@ self_maintained:
       - iKuai stream_domain comment=direct
 
 public_upstreams:
-  # 公共 GFW 域名规则只记录来源，不复制进仓库，避免大表长期静态化。
-  proxy_domains:
+  # iKuai-bypass 仍使用 v2ray-rules-dat 的纯文本域名源，因为 iKuai 只需要域名列表。
+  ikuai_stream_domains:
     - name: Loyalsoldier gfw
       type: domain
       url: https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/gfw.txt
       target: proxy
+    - name: homelab proxy domains
+      type: domain
+      url: https://raw.githubusercontent.com/He-Zhao17/homelab-rules/main/lists/proxy-domain.list
+      target: proxy
+    - name: homelab direct domains
+      type: domain
+      url: https://raw.githubusercontent.com/He-Zhao17/homelab-rules/main/lists/direct-domain.list
+      target: direct
 
-  # iKuai 自定义运营商/IP 分流当前使用的公共 IP 源。
+  # Clash/Stash/Mihomo 订阅使用 Clash rule-provider 格式，避免把公共大表内联进主 YAML。
+  clash_rule_providers:
+    - name: public-private
+      behavior: domain
+      url: https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/private.txt
+      target: direct
+    - name: public-direct
+      behavior: domain
+      url: https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/direct.txt
+      target: direct
+    - name: public-proxy
+      behavior: domain
+      url: https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/proxy.txt
+      target: proxy
+    - name: public-lancidr
+      behavior: ipcidr
+      url: https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/lancidr.txt
+      target: direct
+    - name: public-cncidr
+      behavior: ipcidr
+      url: https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/cncidr.txt
+      target: direct
+    - name: public-telegramcidr
+      behavior: ipcidr
+      url: https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/telegramcidr.txt
+      target: proxy
+
+  # iKuai 自定义运营商/IP 分流当前使用的公共 IP 源，保留给 iKuai-bypass 同步。
   custom_isp:
     - name: 国内IP列表
       tag: ipcn

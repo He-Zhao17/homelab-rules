@@ -21,3 +21,22 @@
 https://raw.githubusercontent.com/He-Zhao17/homelab-rules/main/lists/proxy-domain.list
 https://raw.githubusercontent.com/He-Zhao17/homelab-rules/main/lists/direct-domain.list
 ```
+
+## 订阅生成
+
+生成器会读取本仓库的自维护列表，并引用 `Loyalsoldier/clash-rules` 的公共域名/IP 规则集，生成极简 Clash/Stash/Mihomo 订阅。
+
+生成后的订阅只包含两个自定义策略组：
+
+- `代理`：手动选择 `自动选择`、`BWG`、`DMIT` 或 `DIRECT`。
+- `自动选择`：fallback 组，默认 `BWG` 优先、`DMIT` 备用。
+
+运行方式：
+
+```bash
+TROJAN_PASSWORD='不要提交真实密码' python3 -m scripts.publish_gists --dry-run
+```
+
+如果配置了 `BWG_VEID` 和 `BWG_API_KEY`，发布脚本会读取 Bandwagon/KiwiVM 月流量；当 BWG 已用比例达到 95% 时，自动把 `DMIT` 放到 fallback 第一位。API 不可用时会降级为 `BWG` 优先，不阻塞订阅生成。
+
+真实密码和 API key 只能放在本地环境变量或 `.secrets/` 目录，不要写入仓库。

@@ -1,0 +1,11 @@
+# 本目录保存本机运行所需的真实密钥，例如 Trojan 密码、Bandwagon VEID/API_KEY。
+# 这些内容绝不能提交到公开仓库。
+.secrets/
+
+# 订阅生成产物会包含真实节点密码，只能作为本地临时文件或推送到 secret Gist。
+build/
+
+# Python 测试和运行缓存没有版本管理价值，忽略后可以保持提交干净。
+__pycache__/
+.pytest_cache/
+*.pyc
