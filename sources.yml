@@ -1,0 +1,50 @@
+# 这个文件记录家庭网络分流规则的输入来源。
+# 后续生成 iKuai、Mihomo/Gist、AdGuardHome 规则时，应该优先读取这里，而不是把 iKuai 当前表反向当作事实源。
+
+version: 1
+
+self_maintained:
+  # 自维护代理/旁路域名列表：用于补充公共规则中需要强制走旁路或代理的域名。
+  proxy_domains:
+    path: lists/proxy-domain.list
+    raw_url: https://raw.githubusercontent.com/He-Zhao17/homelab-rules/main/lists/proxy-domain.list
+    migrated_from:
+      - iKuai stream_domain comment=PassWall
+      - iKuai stream_domain comment=IKUAI_BYPASS_private_bypass
+
+  # 自维护直连域名列表：用于补充公共规则中需要强制走主线直连的域名。
+  direct_domains:
+    path: lists/direct-domain.list
+    raw_url: https://raw.githubusercontent.com/He-Zhao17/homelab-rules/main/lists/direct-domain.list
+    migrated_from:
+      - iKuai stream_domain comment=direct
+      - iKuai stream_domain comment=IKUAI_BYPASS_private_direct
+
+public_upstreams:
+  # 公共 GFW 域名规则只记录来源，不复制进仓库，避免大表长期静态化。
+  proxy_domains:
+    - name: Loyalsoldier gfw
+      type: domain
+      url: https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/gfw.txt
+      target: proxy
+
+  # iKuai 自定义运营商/IP 分流当前使用的公共 IP 源。
+  custom_isp:
+    - name: 国内IP列表
+      tag: ipcn
+      url: https://raw.githubusercontent.com/Loyalsoldier/geoip/release/text/cn.txt
+      target: direct_or_local_wan
+    - name: telegram
+      tag: iptg
+      url: https://raw.githubusercontent.com/Loyalsoldier/geoip/release/text/telegram.txt
+      target: proxy
+    - name: google
+      tag: ipgoogle
+      url: https://raw.githubusercontent.com/Loyalsoldier/geoip/release/text/google.txt
+      target: proxy
+
+migration:
+  # 迁移时间使用当前运行环境日期，便于以后定位初始快照来源。
+  date: 2026-06-05
+  source_router: 192.168.50.2
+  exported_via: 192.168.50.232 ikuai-bypass helper
