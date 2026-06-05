@@ -37,6 +37,6 @@ https://raw.githubusercontent.com/He-Zhao17/homelab-rules/main/lists/direct-doma
 TROJAN_PASSWORD='不要提交真实密码' python3 -m scripts.publish_gists --dry-run
 ```
 
-如果配置了 `BWG_VEID` 和 `BWG_API_KEY`，发布脚本会读取 Bandwagon/KiwiVM 月流量；当 BWG 已用比例达到 95% 时，自动把 `DMIT` 放到 fallback 第一位。API 不可用时会降级为 `BWG` 优先，不阻塞订阅生成。
+BWG 和 DMIT 都采用超流量暂停的服务形态，因此发布脚本不读取服务商流量 API。节点超量暂停或故障后，由客户端/旁路由的 fallback 健康检查自动切到下一个可用节点。
 
-真实密码和 API key 只能放在本地环境变量或 `.secrets/` 目录，不要写入仓库。
+真实密码只能放在本地环境变量或 `.secrets/` 目录，不要写入仓库。

@@ -77,3 +77,19 @@ def test_build_config_uses_clash_rule_providers_for_public_domain_and_ip_sources
     assert "RULE-SET,public-telegramcidr,代理" in config["rules"]
     assert "RULE-SET,public-cncidr,DIRECT" in config["rules"]
     assert "GEOIP,CN,DIRECT" in config["rules"]
+
+
+def test_build_config_defaults_to_bwg_first_without_traffic_api():
+    # BWG/DMIT 都是超流量后暂停的服务形态，客户端 fallback 自然切换即可。
+    # 因此生成器不再读取服务商流量 API，也不按百分比提前调整节点顺序。
+    config = build_config(
+        trojan_password="secret-password",
+        nodes=[
+            {"name": "BWG", "server": "bwg.irispeko.com", "sni": "bwg.irispeko.com"},
+            {"name": "DMIT", "server": "dmit.irispeko.com", "sni": "dmit.irispeko.com"},
+        ],
+        my_proxy_domains=[],
+        my_direct_domains=[],
+    )
+
+    assert config["proxy-groups"][1]["proxies"] == ["BWG", "DMIT"]
